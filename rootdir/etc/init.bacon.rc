@@ -311,7 +311,7 @@ service sensors /system/bin/sensors.qcom
 on property:ro.data.large_tcp_window_size=true
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
 
-on property:persist.env.fastdorm.enabled=true
+on property:persist.env.fastdorm.enabled=false
     setprop persist.radio.data_no_toggle 1
 
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
@@ -332,7 +332,6 @@ service p2p_supplicant /system/bin/wpa_supplicant \
     #   group wifi inet keystore
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
-    disabled
     oneshot
 
 service wpa_supplicant /system/bin/wpa_supplicant \
@@ -345,7 +344,6 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     #   group wifi inet keystore
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
-    disabled
     oneshot
 
 service loc_launcher /system/bin/loc_launcher
@@ -366,7 +364,6 @@ service charger /sbin/healthd -c
 service hvdcp /system/bin/hvdcp
     class core
     user root
-    disabled
 
 on property:persist.usb.hvdcp.detect=true
     start hvdcp
@@ -375,7 +372,6 @@ on property:persist.usb.hvdcp.detect=false
     stop hvdcp
 
 service qbcharger /charger -m 1
-    disabled
     oneshot
     seclabel u:r:healthd:s0
 
@@ -394,7 +390,6 @@ service mpdecision /system/bin/mpdecision --avg_comp
    class main
    user root
    group root readproc
-   disabled
 
 service thermal-engine /system/vendor/bin/thermal-engine
    class main
@@ -424,7 +419,6 @@ service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
     user bluetooth
     group bluetooth net_bt_admin qcom_diag diag radio
     seclabel u:r:bluetooth_loader:s0
-    disabled
     oneshot
 
 on property:bluetooth.hciattach=true
@@ -454,14 +448,12 @@ service diag_mdlog_start /system/bin/diag_mdlog
     class late_start
     user shell
     group system qcom_diag diag sdcard_rw sdcard_r media_rw
-    disabled
     oneshot
 
 service diag_mdlog_stop /system/bin/diag_mdlog -k
     class late_start
     user shell
     group system qcom_diag diag sdcard_rw sdcard_r media_rw
-    disabled
     oneshot
 
 service qlogd /system/xbin/qlogd
